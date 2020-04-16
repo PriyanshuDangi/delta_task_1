@@ -1,0 +1,45 @@
+body{
+    color: white;
+    background-color: #333333;
+    height: 100vh;
+}
+header div{
+    color: white;
+    text-align: center;
+}
+a{
+    color: greenyellow;
+}
+p{
+    margin: 0;
+}
+section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+.grid-container {
+    /* width: 20%; */
+    width: 350px;
+    height: 200px;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 25% 25% 25% 25%;
+    padding: 1%;
+    border: 2px solid white;
+    border-radius: 10%;
+}
+.grid-item {
+    cursor: pointer;
+    color: blue;
+    background-color: #eeeeee;
+    margin: 4%;
+    text-align: center;
+    font-size: 30px;
+}
+.grid-item:hover {
+    background-color: #333333;
+    color: white;
+}
