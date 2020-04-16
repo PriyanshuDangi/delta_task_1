@@ -1,5 +1,5 @@
 const gridContainer = document.querySelector(".grid-container");
-gridContainer.style.fontSize = "400%";
+gridContainer.style.fontSize = "300%";
 gridContainer.innerHTML = "Click Here To Start The Game";
 const button = document.querySelector('button');
 //click to start
@@ -7,6 +7,8 @@ gridContainer.addEventListener('click',countdowm);
 button.addEventListener('click',countdowm);
 
 function countdowm(){ 
+    clearInterval(x);
+    document.getElementById('timer').textContent = "0:00:00"
     gridContainer.removeEventListener('click',countdowm);
     gridContainer.style.fontSize = "600%";
     gridContainer.style.textAlign = "center";
