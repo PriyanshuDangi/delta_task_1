@@ -6,7 +6,8 @@ const button = document.querySelector('button');
 gridContainer.addEventListener('click',countdowm);
 button.addEventListener('click',countdowm);
 
-function countdowm(){ 
+function countdowm(){
+    j=1; 
     clearInterval(x);
     document.getElementById('timer').textContent = "0:00:00"
     gridContainer.removeEventListener('click',countdowm);
@@ -14,15 +15,15 @@ function countdowm(){
     gridContainer.style.textAlign = "center";
     setTimeout(() => {
         gridContainer.innerHTML = "3";
-        console.log(3);
+        // console.log(3);
     }, 0);
     setTimeout(() => {
         gridContainer.innerHTML = "2";
-        console.log(2);
+        // console.log(2);
     }, 1000);
     setTimeout(() => {
         gridContainer.innerHTML = "1";
-        console.log(1);
+        // console.log(1);
     }, 2000);
     setTimeout(() => myfunc(), 3000);
 }
@@ -72,20 +73,23 @@ function shuffle(array) {
 var j = 1;
 var x;
 var bestScores;
-if(localStorage.getItem('bestScores')){
+function bestScoreFunction(){
+    if(localStorage.getItem('bestScores')){
     bestScoresFull = JSON.parse(localStorage.getItem('bestScores'));
     bestScoresFull.sort(function(a, b){return a - b});
     bestScores = bestScoresFull.slice(0,5);
     console.log(bestScores);
     var para = document.getElementsByTagName('p');
-    console.log(para);
+    //console.log(para);
     bestScores.forEach((element, index )=> {
         para[index].textContent = timeFormat(bestScores[index])
     })
 }  else{
     bestScores = [];
     localStorage.setItem('bestScores', JSON.stringify(bestScores));
-}
+}}
+
+bestScoreFunction();
 
 //to change time to minute:seconds:mSeconds format
 function timeFormat(timeInFormat){
@@ -99,7 +103,9 @@ var z = document.getElementById("myAudio");
 //FUNCTION TO CHANGE THE NUMBERS
 const change = (event) => {
     var n = parseInt(event.textContent);
+    //console.log(j, n);
     if(j == n){
+       
         z.play();
         if(n===40){
             clearInterval(x);
@@ -107,7 +113,8 @@ const change = (event) => {
             document.getElementById('result').textContent =  `Well done! Your score is ${result}`;
             var bestScoresObject = bestScores.concat(timeTaken);
             var bestScoresJSON = JSON.stringify(bestScoresObject);
-            localStorage.setItem('bestScores', bestScoresJSON);
+            localStorage.setItem('bestScores', bestScoresJSON);            
+            bestScoreFunction();
         }
         if(n>20){
             event.textContent = " ";
