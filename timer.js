@@ -40,6 +40,11 @@ function myfunc(){
     a = shuffle(a);
     a.forEach((element, index) => {
         element = element+1;
+        var g = 90 - element*2;
+        // var f = 100 -g;
+        gridItem[index].style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        // gridItem[index].style.color = `rgb(${f}%,${f}%,${f}%)`;
+        gridItem[index].style.color =   `black`;
         gridItem[index].textContent = "" + element;
     });
 }
@@ -90,11 +95,12 @@ function timeFormat(timeInFormat){
     return `${minute}:${seconds}:${mSeconds}`;
 }
 
+var z = document.getElementById("myAudio");
 //FUNCTION TO CHANGE THE NUMBERS
 const change = (event) => {
     var n = parseInt(event.textContent);
     if(j == n){
-
+        z.play();
         if(n===40){
             clearInterval(x);
             var result = document.getElementById('timer').textContent;
@@ -105,8 +111,15 @@ const change = (event) => {
         }
         if(n>20){
             event.textContent = " ";
+            event.style.backgroundColor = "rgb(0,0,0)";
         } else if(n>0 && n<21){
+        var g = 50 - (n)*2;
+        // var f = 100 - g;
+        event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
+        event.style.color = `white`;
         event.textContent = 20 + n;
-        } j++;
+        } 
+        j++;
     }
 }
