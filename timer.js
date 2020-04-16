@@ -1,12 +1,14 @@
 const gridContainer = document.querySelector(".grid-container");
 gridContainer.style.fontSize = "400%";
-gridContainer.innerHTML = "Click Anywhere";
-
-
-window.addEventListener('click',countdowm);
+gridContainer.innerHTML = "Click Here To Start The Game";
+const button = document.querySelector('button');
+//click to start
+gridContainer.addEventListener('click',countdowm);
+button.addEventListener('click',countdowm);
 
 function countdowm(){ 
-    window.removeEventListener('click',countdowm);
+    gridContainer.removeEventListener('click',countdowm);
+    gridContainer.style.fontSize = "600%";
     gridContainer.style.textAlign = "center";
     setTimeout(() => {
         gridContainer.innerHTML = "3";
@@ -23,26 +25,31 @@ function countdowm(){
     setTimeout(() => myfunc(), 3000);
 }
 
-
+var start;
 function myfunc(){
-    // console.log('hlo');
+    gridContainer.style.gridTemplateColumns = "20% 20% 20% 20% 20%";
+    gridContainer.style.gridTemplateRows = "25% 25% 25% 25%";
     gridContainer.innerHTML = '<div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div>' ;
     var gridItem = document.getElementsByClassName("grid-item");
-        var start = new Date().getTime();
-        x = setInterval(myTimer, 10);
-        function myTimer(){
-            var now = new Date().getTime();
-            timeTaken = now - start;
-            //console.log(timeTaken);
-            var mSeconds = Math.floor((timeTaken%(1000)));
-            var seconds = Math.floor((timeTaken%(1000*60))/1000);
-            var minute = Math.floor((timeTaken % (1000 * 60 * 60)) / (1000 * 60));
-               
-            document.getElementById('timer').textContent = `${minute}:${seconds}:${mSeconds}`;
-        } 
+    start = new Date().getTime();
+    x = setInterval(myTimer, 10);
+         
+    for (var a=[],i=0;i<20;++i) a[i]=i;
+    a = shuffle(a);
+    a.forEach((element, index) => {
+        element = element+1;
+        gridItem[index].textContent = "" + element;
+    });
+}
 
+var timeTaken;
+//function for timer
+function myTimer(){
+    var now = new Date().getTime();
+    timeTaken = now - start;
+    document.getElementById('timer').textContent = timeFormat(timeTaken);
+}
 
-for (var a=[],i=0;i<20;++i) a[i]=i;
 
 function shuffle(array) {
     var tmp, current, top = array.length;
@@ -55,16 +62,8 @@ function shuffle(array) {
     return array;
 }
 
-a = shuffle(a);
-a.forEach((element, index) => {
-    element = element+1;
-    gridItem[index].textContent = "" + element;
-});
-}
-
 var j = 1;
 var x;
-var timeTaken;
 var bestScores;
 if(localStorage.getItem('bestScores')){
     bestScoresFull = JSON.parse(localStorage.getItem('bestScores'));
@@ -76,14 +75,12 @@ if(localStorage.getItem('bestScores')){
     bestScores.forEach((element, index )=> {
         para[index].textContent = timeFormat(bestScores[index])
     })
-    // document.getElementById("best-score").textContent = bestScores;
-    // console.log(timeFormat(bestScores[0]));
 }  else{
     bestScores = [];
     localStorage.setItem('bestScores', JSON.stringify(bestScores));
 }
 
-//to change time to minute:seconds:ms format
+//to change time to minute:seconds:mSeconds format
 function timeFormat(timeInFormat){
     var mSeconds = Math.floor((timeInFormat%(1000)));
     var seconds = Math.floor((timeInFormat%(1000*60))/1000);
