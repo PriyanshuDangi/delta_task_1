@@ -7,8 +7,14 @@ header div{
     color: white;
     text-align: center;
 }
-a{
+button{
+    background-color: #333333;
+    cursor: pointer;
     color: greenyellow;
+}
+button:hover{
+    color: #333333;
+    background-color: greenyellow;
 }
 p{
     margin: 0;
@@ -25,8 +31,8 @@ section{
     width: 350px;
     height: 200px;
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 25% 25% 25% 25%;
+    /* grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 25% 25% 25% 25%; */
     padding: 1%;
     border: 2px solid white;
     border-radius: 10%;
