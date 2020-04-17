@@ -1,12 +1,28 @@
 const gridContainer = document.querySelector(".grid-container");
-gridContainer.style.fontSize = "300%";
-gridContainer.innerHTML = "Click Here To Start The Game";
+var select = document.querySelector('#difficulty');
 const button = document.querySelector('button');
+function startFunction(){
+    clearInterval(x);
+    document.getElementById('timer').textContent = "0:00:00"
+    gridContainer.style.gridTemplateColumns = "auto";
+    gridContainer.style.fontSize = "300%";
+    gridContainer.innerHTML = "Click Here To Start The Game";
+    gridContainer.addEventListener('click',countdowm);
+    bestScoreFunction();
+};
+startFunction();
+
+
 //click to start
 gridContainer.addEventListener('click',countdowm);
 button.addEventListener('click',countdowm);
+select.addEventListener('change', startFunction);
 
+var difficulty;
 function countdowm(){
+    difficulty = document.getElementById('difficulty').value;
+    // console.log(difficulty);
+    bestScoreFunction();
     j=1; 
     clearInterval(x);
     document.getElementById('timer').textContent = "0:00:00"
@@ -26,6 +42,7 @@ function countdowm(){
         // console.log(1);
     }, 2000);
     setTimeout(() => myfunc(), 3000);
+
 }
 
 var start;
@@ -74,20 +91,25 @@ var j = 1;
 var x;
 var bestScores;
 function bestScoreFunction(){
-    if(localStorage.getItem('bestScores')){
-    bestScoresFull = JSON.parse(localStorage.getItem('bestScores'));
-    bestScoresFull.sort(function(a, b){return a - b});
-    bestScores = bestScoresFull.slice(0,5);
-    console.log(bestScores);
-    var para = document.getElementsByTagName('p');
-    //console.log(para);
-    bestScores.forEach((element, index )=> {
-        para[index].textContent = timeFormat(bestScores[index])
-    })
-}  else{
-    bestScores = [];
-    localStorage.setItem('bestScores', JSON.stringify(bestScores));
-}}
+    difficulty = document.getElementById('difficulty').value;
+    if(localStorage.getItem('bestScores' + difficulty)){
+        bestScoresFull = JSON.parse(localStorage.getItem('bestScores' + difficulty));
+        bestScoresFull.sort(function(a, b){return a - b});
+        bestScores = bestScoresFull.slice(0,5);
+        console.log(bestScores);
+        var para = document.getElementsByTagName('p');
+        //console.log(para);
+        for(var par=0;par<5;par++){
+        para[par].innerHTML = "";
+        }
+        bestScores.forEach((element, index )=> {
+            para[index].textContent = timeFormat(bestScores[index])
+        })
+    }  else{
+        bestScores = [];
+        localStorage.setItem('bestScores'+difficulty, JSON.stringify(bestScores));
+    }
+}
 
 bestScoreFunction();
 
@@ -107,26 +129,76 @@ const change = (event) => {
     if(j == n){
        
         z.play();
-        if(n===40){
-            clearInterval(x);
-            var result = document.getElementById('timer').textContent;
-            document.getElementById('result').textContent =  `Well done! Your score is ${result}`;
-            var bestScoresObject = bestScores.concat(timeTaken);
-            var bestScoresJSON = JSON.stringify(bestScoresObject);
-            localStorage.setItem('bestScores', bestScoresJSON);            
-            bestScoreFunction();
+        if(difficulty == 20){
+            f20(n,event);
         }
-        if(n>20){
-            event.textContent = " ";
-            event.style.backgroundColor = "rgb(0,0,0)";
-        } else if(n>0 && n<21){
+        else if(difficulty == 40){
+            f40(n, event);
+        } else if(difficulty == 60){
+            f60(n, event);
+        }
+        j++;
+    }
+}
+
+function f20(n, event){
+    if(n===20){
+        complete();        
+    }
+    
+    if(n<21){
+        event.textContent = " ";
+        event.style.backgroundColor = "rgb(0,0,0)";
+    } 
+}
+
+function f40(n, event){
+    if(n===40){
+        complete(); 
+    }
+    
+    if(n>20){
+        event.textContent = " ";
+        event.style.backgroundColor = "rgb(0,0,0)";
+    } else if(n>0 && n<21){
         var g = 50 - (n)*2;
         // var f = 100 - g;
         event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
         // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
         event.style.color = `white`;
         event.textContent = 20 + n;
-        } 
-        j++;
+    } 
+}
+
+function f60(n, event){
+    if(n===60){
+        complete();        
     }
+    
+    if(n>40){
+        event.textContent = " ";
+        event.style.backgroundColor = "rgb(0,0,0)";
+    } else if(n>0 && n<21){
+        var g = 50 - (n)*2;
+        // var f = 100 - g;
+        event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
+        event.style.color = `white`;
+        event.textContent = 20 + n;
+    } else{
+        event.textContent = 20 + n;
+        var g = 90 - (n-20)*2;
+        event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        event.style.color =   `black`;
+    }
+}
+
+function complete(){
+    clearInterval(x);
+    var result = document.getElementById('timer').textContent;
+    document.getElementById('result').textContent =  `Well done! Your score is ${result}`;
+    var bestScoresObject = bestScores.concat(timeTaken);
+    var bestScoresJSON = JSON.stringify(bestScoresObject);
+    localStorage.setItem('bestScores'+difficulty, bestScoresJSON);            
+    bestScoreFunction();
 }

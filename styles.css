@@ -7,6 +7,9 @@ header div{
     color: white;
     text-align: center;
 }
+select{
+    margin-bottom: 20px;;
+}
 button{
     background-color: #333333;
     cursor: pointer;
@@ -48,4 +51,22 @@ section{
 .grid-item:hover {
     background-color: #333333;
     color: white;
+}
+
+@media(min-width: 992px){
+    body{
+        margin-top: 60px;
+    }
+}
+
+@media(min-width: 768px) and (max-width: 991px){
+    body{
+        margin-top: 40px;
+    }
+}
+
+@media(max-width: 767px){
+    body{
+        margin-top: 20px;
+    }
 }
