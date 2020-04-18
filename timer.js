@@ -6,7 +6,7 @@ function startFunction(){
     document.getElementById('timer').textContent = "0:00:00"
     gridContainer.style.gridTemplateColumns = "auto";
     gridContainer.style.fontSize = "300%";
-    gridContainer.innerHTML = "Click Here To Start The Game";
+    gridContainer.textContent = "Click Here To Start The Game";
     gridContainer.addEventListener('click',countdowm);
     bestScoreFunction();
 };
@@ -30,15 +30,15 @@ function countdowm(){
     gridContainer.style.fontSize = "600%";
     gridContainer.style.textAlign = "center";
     setTimeout(() => {
-        gridContainer.innerHTML = "3";
+        gridContainer.textContent = "3";
         // console.log(3);
     }, 0);
     setTimeout(() => {
-        gridContainer.innerHTML = "2";
+        gridContainer.textContent = "2";
         // console.log(2);
     }, 1000);
     setTimeout(() => {
-        gridContainer.innerHTML = "1";
+        gridContainer.textContent = "1";
         // console.log(1);
     }, 2000);
     setTimeout(() => myfunc(), 3000);
@@ -47,9 +47,8 @@ function countdowm(){
 
 var start;
 function myfunc(){
-    gridContainer.style.gridTemplateColumns = "20% 20% 20% 20% 20%";
-    gridContainer.style.gridTemplateRows = "25% 25% 25% 25%";
-    gridContainer.innerHTML = '<div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div>' ;
+    gridContainer.innerHTML = '<div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div>';
+
     var gridItem = document.getElementsByClassName("grid-item");
     start = new Date().getTime();
     x = setInterval(myTimer, 10);
@@ -65,6 +64,13 @@ function myfunc(){
         gridItem[index].style.color =   `black`;
         gridItem[index].textContent = "" + element;
     });
+
+    for (var king = 0; king<4;king++){
+        var hlo =document.getElementsByClassName("row-left")[king].innerHTML;
+        var prince = hlo + hlo;
+        document.getElementsByClassName("row-left")[king].innerHTML =prince;
+    }
+
 }
 
 var timeTaken;
@@ -100,7 +106,7 @@ function bestScoreFunction(){
         var para = document.getElementsByTagName('p');
         //console.log(para);
         for(var par=0;par<5;par++){
-        para[par].innerHTML = "";
+        para[par].textContent = "";
         }
         bestScores.forEach((element, index )=> {
             para[index].textContent = timeFormat(bestScores[index])
@@ -120,21 +126,22 @@ function timeFormat(timeInFormat){
     var minute = Math.floor((timeInFormat % (1000 * 60 * 60)) / (1000 * 60));
     return `${minute}:${seconds}:${mSeconds}`;
 }
-
+const easy = 20;
+const medium = 40;
+const difficult = 60;
 var z = document.getElementById("myAudio");
 //FUNCTION TO CHANGE THE NUMBERS
 const change = (event) => {
     var n = parseInt(event.textContent);
     //console.log(j, n);
     if(j == n){
-       
         z.play();
-        if(difficulty == 20){
+        if(difficulty == easy){
             f20(n,event);
         }
-        else if(difficulty == 40){
+        else if(difficulty == medium){
             f40(n, event);
-        } else if(difficulty == 60){
+        } else if(difficulty == difficult){
             f60(n, event);
         }
         j++;
@@ -142,54 +149,72 @@ const change = (event) => {
 }
 
 function f20(n, event){
-    if(n===20){
+    if(n===easy){
         complete();        
     }
     
-    if(n<21){
-        event.textContent = " ";
-        event.style.backgroundColor = "rgb(0,0,0)";
+    if(n<(easy+1)){
+        event.style.visibility = "hidden";
+        secondElement(event).style.visibility = "hidden"
+        event.textContent = "0";
+        secondElement(event).textContent = "0";
+        
     } 
 }
 
 function f40(n, event){
-    if(n===40){
+    if(n===medium){
         complete(); 
     }
     
-    if(n>20){
-        event.textContent = " ";
-        event.style.backgroundColor = "rgb(0,0,0)";
-    } else if(n>0 && n<21){
+    if(n>(medium/2)){
+        event.style.visibility = "hidden";
+        secondElement(event).style.visibility = "hidden"
+        event.textContent = "0";
+        secondElement(event).textContent = "0";
+        
+    } else if(n>0 && n<((medium/2)+1)){
         var g = 50 - (n)*2;
         // var f = 100 - g;
         event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        secondElement(event).style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
         // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
         event.style.color = `white`;
+        secondElement(event).style.color = `white`;
         event.textContent = 20 + n;
+        secondElement(event).textContent = 20 + n;
     } 
 }
 
 function f60(n, event){
-    if(n===60){
+    if(n===difficult){
         complete();        
     }
     
-    if(n>40){
-        event.textContent = " ";
-        event.style.backgroundColor = "rgb(0,0,0)";
-    } else if(n>0 && n<21){
+    if(n>((difficult*2)/3)){
+        event.style.visibility = "hidden";
+        secondElement(event).style.visibility = "hidden"
+        event.textContent = "0";
+        secondElement(event).textContent = "0";
+        
+    } else if(n>0 && n<((difficult/3)+1)){
         var g = 50 - (n)*2;
         // var f = 100 - g;
         event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        secondElement(event).style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
         // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
         event.style.color = `white`;
-        event.textContent = 20 + n;
+        event.textContent = (difficult/3) + n;
+        secondElement(event).style.color = `white`;
+        secondElement(event).textContent = (difficult/3) + n;
     } else{
-        event.textContent = 20 + n;
+        event.textContent = (difficult/3) + n;
         var g = 90 - (n-20)*2;
         event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
         event.style.color =   `black`;
+        secondElement(event).textContent = (difficult/3) + n;
+        secondElement(event).style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
+        secondElement(event).style.color =   `black`;
     }
 }
 
@@ -201,4 +226,23 @@ function complete(){
     var bestScoresJSON = JSON.stringify(bestScoresObject);
     localStorage.setItem('bestScores'+difficulty, bestScoresJSON);            
     bestScoreFunction();
+}
+function secondElement(event){
+    const q = event.parentElement;
+        //console.log(q);
+        var nodes = Array.prototype.slice.call( q.children );
+        //console.log(nodes.indexOf(event));
+        var nodeIndex = nodes.indexOf(event);
+        var sibling;
+        if(q.nextElementSibling){
+           // console.log(q.nextElementSibling)
+            sibling = q.nextElementSibling;
+        }
+        if(q.previousElementSibling){
+           // console.log(q.previousElementSibling);
+             sibling = q.previousElementSibling;
+        }
+        return sibling.children[nodeIndex];
+        console.log(sibling.children[nodeIndex]);
+
 }
