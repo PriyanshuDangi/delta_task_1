@@ -181,8 +181,8 @@ function f40(n, event){
         // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
         event.style.color = `white`;
         secondElement(event).style.color = `white`;
-        event.textContent = 20 + n;
-        secondElement(event).textContent = 20 + n;
+        event.textContent = (medium/2) + n;
+        secondElement(event).textContent = (medium/2) + n;
     } 
 }
 
@@ -231,6 +231,8 @@ function secondElement(event){
     const q = event.parentElement;
         //console.log(q);
         var nodes = Array.prototype.slice.call( q.children );
+        // console.log(q.children);
+        // console.log(nodes);
         //console.log(nodes.indexOf(event));
         var nodeIndex = nodes.indexOf(event);
         var sibling;
