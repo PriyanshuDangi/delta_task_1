@@ -28,10 +28,11 @@ function countdowm(){
     clearInterval(x);
     document.getElementById('timer').textContent = "0:00:00"
     gridContainer.removeEventListener('click',countdowm);
-    gridContainer.style.fontSize = "600%";
+    // gridContainer.style.fontSize = "600%";
     gridContainer.style.textAlign = "center";
     setTimeout(() => {
         gridContainer.textContent = "3";
+        gridContainer.style.fontSize = "600%";
         countdownMP3.play();
     }, 100);
     setTimeout(() => {
