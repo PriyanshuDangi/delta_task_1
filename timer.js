@@ -19,9 +19,10 @@ button.addEventListener('click',countdowm);
 select.addEventListener('change', startFunction);
 
 var difficulty;
+var countdownMP3 = document.getElementById('countDown');
+
 function countdowm(){
     difficulty = document.getElementById('difficulty').value;
-    // console.log(difficulty);
     bestScoreFunction();
     j=1; 
     clearInterval(x);
@@ -31,23 +32,21 @@ function countdowm(){
     gridContainer.style.textAlign = "center";
     setTimeout(() => {
         gridContainer.textContent = "3";
-        // console.log(3);
-    }, 0);
+        countdownMP3.play();
+    }, 100);
     setTimeout(() => {
         gridContainer.textContent = "2";
-        // console.log(2);
-    }, 1000);
+    }, 1100);
     setTimeout(() => {
         gridContainer.textContent = "1";
-        // console.log(1);
-    }, 2000);
-    setTimeout(() => myfunc(), 3000);
-
-}
+    }, 2100);
+    setTimeout(() => myfunc(), 3100);
+}   
 
 var start;
+//start the game
 function myfunc(){
-    gridContainer.innerHTML = '<div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="hlo"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div>';
+    gridContainer.innerHTML = '<div class="row-left"> <div class="row5"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="row5"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="row5"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div><div class="row-left"> <div class="row5"> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> <div class="grid-item" onclick="change(this)"></div> </div> </div>';
 
     var gridItem = document.getElementsByClassName("grid-item");
     start = new Date().getTime();
@@ -58,17 +57,15 @@ function myfunc(){
     a.forEach((element, index) => {
         element = element+1;
         var g = 90 - element*2;
-        // var f = 100 -g;
         gridItem[index].style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
-        // gridItem[index].style.color = `rgb(${f}%,${f}%,${f}%)`;
         gridItem[index].style.color =   `black`;
         gridItem[index].textContent = "" + element;
     });
 
-    for (var king = 0; king<4;king++){
-        var hlo =document.getElementsByClassName("row-left")[king].innerHTML;
-        var prince = hlo + hlo;
-        document.getElementsByClassName("row-left")[king].innerHTML =prince;
+    for (var rowIndex = 0; rowIndex<4;rowIndex++){
+        var row5 =document.getElementsByClassName("row-left")[rowIndex].innerHTML;
+        var row = row5 + row5;
+        document.getElementsByClassName("row-left")[rowIndex].innerHTML =row;
     }
 
 }
@@ -102,12 +99,13 @@ function bestScoreFunction(){
         bestScoresFull = JSON.parse(localStorage.getItem('bestScores' + difficulty));
         bestScoresFull.sort(function(a, b){return a - b});
         bestScores = bestScoresFull.slice(0,5);
-        console.log(bestScores);
+        //console.log(bestScores);
         var para = document.getElementsByTagName('p');
-        //console.log(para);
+
         for(var par=0;par<5;par++){
         para[par].textContent = "";
         }
+
         bestScores.forEach((element, index )=> {
             para[index].textContent = timeFormat(bestScores[index])
         })
@@ -117,7 +115,7 @@ function bestScoreFunction(){
     }
 }
 
-bestScoreFunction();
+//bestScoreFunction();
 
 //to change time to minute:seconds:mSeconds format
 function timeFormat(timeInFormat){
@@ -126,10 +124,12 @@ function timeFormat(timeInFormat){
     var minute = Math.floor((timeInFormat % (1000 * 60 * 60)) / (1000 * 60));
     return `${minute}:${seconds}:${mSeconds}`;
 }
+
 const easy = 20;
 const medium = 40;
 const difficult = 60;
 var z = document.getElementById("myAudio");
+
 //FUNCTION TO CHANGE THE NUMBERS
 const change = (event) => {
     var n = parseInt(event.textContent);
@@ -148,6 +148,7 @@ const change = (event) => {
     }
 }
 
+//for easy level
 function f20(n, event){
     if(n===easy){
         complete();        
@@ -161,7 +162,7 @@ function f20(n, event){
         
     } 
 }
-
+//for medium level
 function f40(n, event){
     if(n===medium){
         complete(); 
@@ -175,10 +176,8 @@ function f40(n, event){
         
     } else if(n>0 && n<((medium/2)+1)){
         var g = 50 - (n)*2;
-        // var f = 100 - g;
         event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
         secondElement(event).style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
-        // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
         event.style.color = `white`;
         secondElement(event).style.color = `white`;
         event.textContent = (medium/2) + n;
@@ -186,6 +185,7 @@ function f40(n, event){
     } 
 }
 
+//for difficult level
 function f60(n, event){
     if(n===difficult){
         complete();        
@@ -199,10 +199,8 @@ function f60(n, event){
         
     } else if(n>0 && n<((difficult/3)+1)){
         var g = 50 - (n)*2;
-        // var f = 100 - g;
         event.style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
         secondElement(event).style.backgroundColor = `rgb(${g}%,${g}%,${g}%)`;
-        // event.style.color = `rgb(${f}%,${f}%,${f}%)`;
         event.style.color = `white`;
         event.textContent = (difficult/3) + n;
         secondElement(event).style.color = `white`;
@@ -218,6 +216,7 @@ function f60(n, event){
     }
 }
 
+
 function complete(){
     clearInterval(x);
     var result = document.getElementById('timer').textContent;
@@ -227,21 +226,17 @@ function complete(){
     localStorage.setItem('bestScores'+difficulty, bestScoresJSON);            
     bestScoreFunction();
 }
+
+//to change the second grid item of the same row
 function secondElement(event){
     const q = event.parentElement;
-        //console.log(q);
         var nodes = Array.prototype.slice.call( q.children );
-        // console.log(q.children);
-        // console.log(nodes);
-        //console.log(nodes.indexOf(event));
         var nodeIndex = nodes.indexOf(event);
         var sibling;
         if(q.nextElementSibling){
-           // console.log(q.nextElementSibling)
             sibling = q.nextElementSibling;
         }
         if(q.previousElementSibling){
-           // console.log(q.previousElementSibling);
              sibling = q.previousElementSibling;
         }
         return sibling.children[nodeIndex];
